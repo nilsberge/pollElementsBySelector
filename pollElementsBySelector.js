@@ -1,23 +1,27 @@
-function pollForElement(sel, func) {
+function pollElementsBySelector(sel, func) {
     'use strict';
     var elapsed = 0;
     var interval = 100;
     var limit = 2000;
-    var foundElem = document.querySelector(sel);
+
+    function qsa(slctr) {
+        return document.querySelectorAll(slctr);
+    }
+    var foundElems = qsa(sel);
     var elemInterval;
 
-    if (foundElem) {
-        func(foundElem);
+    if (foundElems) {
+        func(foundElems);
     } else {
         elemInterval = window.setInterval(function () {
                 elapsed += interval;
                 //window.console.log('elemInterval: ' + elemInterval + ', elapsed: ' + elapsed);
 
-                foundElem = document.querySelector(sel);
-                if (foundElem || (elapsed >= limit)) {
+                foundElems = qsa(sel);
+                if (foundElems || (elapsed >= limit)) {
                     window.clearInterval(elemInterval);
-                    if (foundElem) {
-                        func(foundElem);
+                    if (foundElems) {
+                        func(foundElems);
                     }
                 }
             }, interval);
