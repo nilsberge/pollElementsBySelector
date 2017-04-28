@@ -10,7 +10,7 @@ function pollElementsBySelector(sel, func) {
     var foundElems = qsa(sel);
     var elemInterval;
 
-    if (foundElems) {
+    if (foundElems.length) {
         func(foundElems);
     } else {
         elemInterval = window.setInterval(function () {
@@ -18,7 +18,7 @@ function pollElementsBySelector(sel, func) {
                 //window.console.log('elemInterval: ' + elemInterval + ', elapsed: ' + elapsed);
 
                 foundElems = qsa(sel);
-                if (foundElems || (elapsed >= limit)) {
+                if (foundElems.length || (elapsed >= limit)) {
                     window.clearInterval(elemInterval);
                     if (foundElems) {
                         func(foundElems);
